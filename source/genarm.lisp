@@ -120,6 +120,42 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
                                  (22 "ք")
                                  (33 "ն"))))))))
 
+(defmethod operation ((op (eql :pst)) &rest args)
+  (flet ((sbutlast (s)
+           (subseq s 0 (1- (length s)))))
+    (let* ((resolved (resolve (first args)))
+           (butlast (sbutlast resolved)))
+      (cond
+        ((or (string-suffix-p resolved "անալ")
+             (string-suffix-p resolved "անել")
+             (string-suffix-p resolved "ենալ"))
+         (strcat (sbutlast (sbutlast butlast))
+                 (case *person*
+                   (1 "ցա")
+                   (2 "ցար")
+                   (3 "ցավ")
+                   (11 "ցանք")
+                   (22 "ցաք")
+                   (33 "ցան"))))
+        ((string-suffix-p resolved "նել")
+         (strcat (sbutlast (sbutlast (sbutlast butlast)))
+                 (case *person*
+                   (1 "ա")
+                   (2 "ար")
+                   (3 "ավ")
+                   (11 "անք")
+                   (22 "աք")
+                   (33 "ան"))))
+        (:else
+         (strcat (sbutlast butlast)
+                 (case *person*
+                   (1 "ցի")
+                   (2 "ցիր")
+                   (3 "ց")
+                   (11 "ցինք")
+                   (22 "ցիք")
+                   (33 "ցին"))))))))
+
 (defmethod operation ((op (eql :nt)) &rest args)
   (let ((modal (resolve (first args))))
     (strcat "չ" (if (equal "է" modal) "ի" modal))))
@@ -140,4 +176,4 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
              :initial-value (first resolved))
      "։")))
 
-(generate :common-future)
+(generate :simple-past)
