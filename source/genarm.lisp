@@ -29,6 +29,9 @@
      (22 ,22-case)
      (33 ,33-case)))
 
+(defun memqual (x list)
+  (member x list :test #'equal))
+
 (define-generic operation (op &rest args)
   "Do complex built-in OPeration/function on ARGS.
 Ensure that the ARGS get `resolve'-d before applyin the OP."
@@ -106,8 +109,7 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
 (defmethod operation ((op (eql :pt)) &rest args)
   (let ((resolved (resolve (first args))))
     (cond
-      ((or (string= resolved "գալ")
-           (string= resolved "տալ"))
+      ((memqual resolved '("գալ" "տալ"))
        (strcat resolved "իս"))
       (:else (frob-substrings  '("ել" "ալ") "ում")))))
 
@@ -132,14 +134,15 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
     (let* ((resolved (resolve (first args)))
            (butlast (sbutlast resolved)))
       (cond
-        ((find resolved '("եմ" "եծ" "է" "ենք" "եք" "են") :test #'string-equal)
+        ((memqual resolved (append '("եմ" "եծ" "է" "ենք" "եք" "են")
+                                   '("չեմ" "չեծ" "չէ" "չենք" "չեք" "չեն")))
          (cond
-           ((string= "եմ" resolved) "էի")
-           ((string= "ես" resolved) "էիր")
-           ((string= "է" resolved) "էր")
-           ((string= "ենք" resolved) "էինք")
-           ((string= "եք" resolved) "էիք")
-           ((string= "են" resolved) "էին")))
+           ((string-suffix-p resolved "եմ") "էի")
+           ((string-suffix-p resolved "ես") "էիր")
+           ((string-suffix-p resolved "է") "էր")
+           ((string-suffix-p resolved "ենք") "էինք")
+           ((string-suffix-p resolved "եք") "էիք")
+           ((string-suffix-p resolved "են") "էին")))
         ((or (string-suffix-p resolved "անալ")
              (string-suffix-p resolved "անել")
              (string-suffix-p resolved "ենալ"))
