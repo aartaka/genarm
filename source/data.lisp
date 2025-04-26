@@ -44,9 +44,9 @@
               (:sp (:pt :vv) :modal)
               (:sp :op :modal (:pt :vv)))
     :conditional-future  (:or
-                          ;; :ct conditional-tense
-                          (:sp (:ct (:ft :vv)))
-                          (:sp :op (:ct (:ft :vv))))
+                          ;; :ct conditional tense
+                          (:sp (:ct :vv))
+                          (:sp :op (:ct :vv)))
     :sentence ((:or
                 :present
                 :simple-future :common-future :conditional-future

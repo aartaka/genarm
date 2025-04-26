@@ -183,6 +183,20 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
    #'(lambda (match frob)
        (funcall frob (strcat "վ" match)))))
 
+(defmethod operation ((op (eql :ct)) &rest args)
+  (let ((resolved (resolve (first args))))
+    (strcat
+     "կ"
+     (subseq resolved 0 (1- (length resolved)))
+     (if (or (and (string-suffix-p resolved "ել")
+                  (string-suffix-p resolved "անել"))
+             (= *person* 3))
+         ""
+         "յ")
+     (person-case
+      "ի" "իր" "ր"
+      "ինք" "իք" "ին"))))
+
 (defun generate (&optional (id :sentence))
   (let* ((*person* 3)
          (resolved (ensure-list (resolve id))))
