@@ -126,6 +126,14 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
     (let* ((resolved (resolve (first args)))
            (butlast (sbutlast resolved)))
       (cond
+        ((find resolved '("եմ" "եծ" "է" "ենք" "եք" "են") :test #'string-equal)
+         (cond
+           ((string= "եմ" resolved) "էի")
+           ((string= "ես" resolved) "էիր")
+           ((string= "է" resolved) "էր")
+           ((string= "ենք" resolved) "էինք")
+           ((string= "եք" resolved) "էիք")
+           ((string= "են" resolved) "էին")))
         ((or (string-suffix-p resolved "անալ")
              (string-suffix-p resolved "անել")
              (string-suffix-p resolved "ենալ"))
