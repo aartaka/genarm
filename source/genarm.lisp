@@ -20,6 +20,15 @@
 
 (defparameter *person* 3)
 
+(defmacro person-case (1-case 2-case 3-case 11-case 22-case 33-case)
+  `(case *person*
+     (1 ,1-case)
+     (2 ,2-case)
+     (3 ,3-case)
+     (11 ,11-case)
+     (22 ,22-case)
+     (33 ,33-case)))
+
 (define-generic operation (op &rest args)
   "Do complex built-in OPeration/function on ARGS.
 Ensure that the ARGS get `resolve'-d before applyin the OP."
@@ -48,13 +57,9 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
   (rand-elt *nouns*))
 
 (defmethod resolve ((form (eql :m)))
-  (case *person*
-    (1 "եմ")
-    (2 "եu")
-    (3 "է")
-    (11 "ենք")
-    (22 "եք")
-    (33 "են")))
+  (person-case
+   "եմ" "եu" "է"
+   "ենք" "եք" "են"))
 
 (defmethod resolve ((form (eql :a)))
   (rand-elt *adjectives*))
@@ -99,7 +104,12 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
               "")))
 
 (defmethod operation ((op (eql :pt)) &rest args)
-  (frob-substrings (resolve (first args)) '("ել" "ալ") "ում"))
+  (let ((resolved (resolve (first args))))
+    (cond
+      ((or (string= resolved "գալ")
+           (string= resolved "տալ"))
+       (strcat resolved "իս"))
+      (:else (frob-substrings  '("ել" "ալ") "ում")))))
 
 (defmethod operation ((op (eql :sft)) &rest args)
   (strcat (resolve (first args)) "ու"))
@@ -112,13 +122,9 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
       (strcat "կ" (if (string-suffix-p resolved "ել")
                       (strcat (sbutlast butlast) "ի")
                       (strcat
-                       butlast (case *person*
-                                 (1 "մ")
-                                 (2 "u")
-                                 (3 "")
-                                 (11 "նք")
-                                 (22 "ք")
-                                 (33 "ն"))))))))
+                       butlast (person-case
+                                "մ" "u" ""
+                                "նք" "ք" "ն")))))))
 
 (defmethod operation ((op (eql :pst)) &rest args)
   (flet ((sbutlast (s)
@@ -138,31 +144,31 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
              (string-suffix-p resolved "անել")
              (string-suffix-p resolved "ենալ"))
          (strcat (sbutlast (sbutlast butlast))
-                 (case *person*
-                   (1 "ցա")
-                   (2 "ցար")
-                   (3 "ցավ")
-                   (11 "ցանք")
-                   (22 "ցաք")
-                   (33 "ցան"))))
+                 (person-case
+                  "ցա" "ցար" "ցավ"
+                  "ցանք" "ցաք" "ցան")))
         ((string-suffix-p resolved "նել")
          (strcat (sbutlast (sbutlast (sbutlast butlast)))
-                 (case *person*
-                   (1 "ա")
-                   (2 "ար")
-                   (3 "ավ")
-                   (11 "անք")
-                   (22 "աք")
-                   (33 "ան"))))
+                 (person-case
+                  "ա" "ար" "ավ"
+                  "անք" "աք" "ան")))
+        ((string= resolved "գալ")
+         (person-case
+          "եկա" "եկար" "եկավ"
+          "եկանք" "եկաք" "եկան"))
+        ((string= resolved "տալ")
+         (person-case
+          "տվեցի" "տվեցիր" "տվեց"
+          "տվեցինք" "տվեցիք" "տվեցին"))
+        ((string= resolved "ուտել")
+         (person-case
+          "կերա" "կերար" "կերավ"
+          "կերանք" "կերաք" "կերան"))
         (:else
          (strcat (sbutlast butlast)
-                 (case *person*
-                   (1 "ցի")
-                   (2 "ցիր")
-                   (3 "ց")
-                   (11 "ցինք")
-                   (22 "ցիք")
-                   (33 "ցին"))))))))
+                 (person-case
+                  "ցի" "ցիր" "ց"
+                  "ցինք" "ցիք" "ցին")))))))
 
 (defmethod operation ((op (eql :nt)) &rest args)
   (let ((modal (resolve (first args))))
