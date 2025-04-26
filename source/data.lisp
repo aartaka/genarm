@@ -8,7 +8,7 @@
 
 ;; TODO: :?
 (defparameter
-    structures
+    *structures*
   ;; Noun phrase (:a is adjective)
   '(:np (:or ((:* :a) :n) :p)
     ;; Subject phrase (:ar-ticle + noun)
@@ -53,7 +53,7 @@
                 :simple-past :imperfect-past :perfect)
                "։")))
 
-(defparameter adjectives
+(defparameter *adjectives*
   (remove-duplicates
    '("բութ" "մութ" "թուխ"
      "փակ" "փափուկ" "տաք" "թանկ"
@@ -64,7 +64,7 @@
      "բարի" "ազնիվ" "սև" "երևանյան" "ամայի" "սրտային" "թվական")
    :test #'equal))
 
-(defparameter nouns
+(defparameter *nouns*
   (remove-duplicates
    '("թաթ" "թութ" "թագ" "գութ" "գութան" "գագաթ" "գաթա" "կաթ" "թան" "թիմ" "թումբ"
      "փութ" "թափ" "թուփ" "տուփ" "ափ" "փափախ" "խուփ"
@@ -90,14 +90,14 @@
      "ամիս" "ամսաթիվ" "երկիր" "երկրագունդ" "պանիր" "պանրիկ" "պատիվ" "պատվոգիր" "երգիչ" "երգչուհի")
    :test #'equal))
 
-(defparameter verbs
+(defparameter *verbs*
   (remove-duplicates
    '("գնալ" "գնել" "ունել" "արել" "աղալ" "խաղալ" "ստանալ" "զգալ" "գրել" "եռալ" "վիճել" "զինել"
      "ուտել" "երագել" "որսալ" "սովորել" "որոշել" "գոռալ" "գովել" "հայհոյել" "նայել" "ծառայել"
      "գծել" "մտածել")
    :test #'equal))
 
-(defparameter adverbs
+(defparameter *adverbs*
   (remove-duplicates
    '("հիմա" "զգաստ" "ցած" "ծածուկ" "գրեթե" "մոտ" "հետո" "նորից" "այժմ ևեթ" "իսկույն ևեթ" "արդյոք")
    :test #'equal))

@@ -31,7 +31,7 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
   form)
 
 (defmethod resolve ((form symbol))
-  (let ((indexed (getf structures form)))
+  (let ((indexed (getf *structures* form)))
     (if indexed
         (resolve indexed)
         (error "Unknown symbol: ~s" form))))
@@ -45,7 +45,7 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
         (mapcan #'resolve-list form))))
 
 (defmethod resolve ((form (eql :n)))
-  (rand-elt nouns))
+  (rand-elt *nouns*))
 
 (defmethod resolve ((form (eql :m)))
   (case *person*
@@ -57,13 +57,13 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
     (33 "են")))
 
 (defmethod resolve ((form (eql :a)))
-  (rand-elt adjectives))
+  (rand-elt *adjectives*))
 
 (defmethod resolve ((form (eql :v)))
-  (rand-elt verbs))
+  (rand-elt *verbs*))
 
 (defmethod resolve ((form (eql :av)))
-  (rand-elt adverbs))
+  (rand-elt *adverbs*))
 
 (defmethod resolve ((form (eql :p)))
   (let ((pronoun (rand-elt '("ես" "մենք" "դու" "դուք" "նա" "սա" "նրանք" "սրանք"))))
