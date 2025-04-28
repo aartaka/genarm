@@ -23,34 +23,36 @@
               ((:? :av) :sp (:pt :vv) :modal)
               ;; :pt present tense
               ((:? :av) :sp :op :modal (:pt :vv)))
-    :simple-future (:or
+    :future-simple (:or
                     ;; :sft simple future
                     (:sp (:sft :vv) :modal)
                     (:sp :op :modal (:sft :vv)))
-    :common-future (:or
+    :future-common (:or
                     ;; :ft classic/common future
                     (:sp (:ft :vv))
                     (:sp :op (:ft :vv)))
-    :simple-past (:or
+    :past-simple (:or
                   ;; :pst simple past
                   (:sp (:pst :vv))
                   (:sp :op (:pst :vv)))
     :past-modal (:pst (:or (:nt :m) :m))
-    :imperfect-past (:or
+    :past-imperfect (:or
                      (:sp :vv :past-modal)
                      (:sp :op :past-modal :vv))
-    :perfect (:or
-              ;; Yes, present tense
-              (:sp (:pt :vv) :modal)
-              (:sp :op :modal (:pt :vv)))
-    :conditional-future  (:or
+    :past-perfect (:or
+                   (:sp :vv :past-modal)
+                   (:sp :op :past-modal :vv))
+    :present-perfect (:or
+                      (:sp :vv :modal)
+                      (:sp :op :modal :vv))
+    :future-conditional  (:or
                           ;; :ct conditional tense
                           (:sp (:ct :vv))
                           (:sp :op (:ct :vv)))
     :sentence ((:or
-                :present
-                :simple-future :common-future :conditional-future
-                :simple-past :imperfect-past :perfect)
+                :present :present-perfect
+                :future-simple :future-common :future-conditional
+                :past-simple :past-imperfect :past-perfect)
                "։")))
 
 (defparameter *adjectives*
