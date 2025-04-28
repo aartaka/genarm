@@ -106,6 +106,16 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
               (rand-elt '("ը" "ս" "դ"))
               "")))
 
+(defmethod operation ((op (eql :pl))  &rest args)
+  (let ((resolved (resolve (first args))))
+    (cond
+      ((string= "մարդ" resolved)
+       "մարդիկ")
+      ((< (length resolved) 5)
+       (strcat resolved "եր"))
+      (:else
+       (strcat resolved "ներ")))))
+
 (defmethod operation ((op (eql :pt)) &rest args)
   (let ((resolved (resolve (first args))))
     (cond

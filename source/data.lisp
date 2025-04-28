@@ -10,9 +10,9 @@
 (defparameter
     *structures*
   ;; Noun phrase (:a is adjective)
-  '(:np (:or ((:* :a) :n) :p)
+  '(:np (:or :p (:pl :n) ((:* :a) :n) ((:* :a) (:pl :n)))
     ;; Subject phrase (:ar-ticle + noun)
-    :sp (:or :p ((:* :a) :n) (:ar :n))
+    :sp (:or :p (:ar :n) ((:* :a) :n) ((:* :a) (:pl :n)))
     ;; Object phrase
     :op (:np)
     ;; Present/imperfect modal (:nt is negation)
