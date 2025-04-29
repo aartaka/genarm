@@ -216,5 +216,3 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
              (rest resolved)
              :initial-value (first resolved))
      "։")))
-
-(generate :simple-past)
