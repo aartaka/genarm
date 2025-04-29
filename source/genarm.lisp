@@ -121,7 +121,7 @@ Ensure that the ARGS get `resolve'-d before applyin the OP."
     (cond
       ((memqual resolved '("գալ" "տալ"))
        (strcat resolved "իս"))
-      (:else (frob-substrings  '("ել" "ալ") "ում")))))
+      (:else (frob-substrings resolved  '("ել" "ալ") "ում")))))
 
 (defmethod operation ((op (eql :sft)) &rest args)
   (strcat (resolve (first args)) "ու"))

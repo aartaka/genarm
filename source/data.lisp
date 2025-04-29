@@ -49,11 +49,10 @@
                           ;; :ct conditional tense
                           (:sp (:ct :vv))
                           (:sp :op (:ct :vv)))
-    :sentence ((:or
-                :present :present-perfect
-                :future-simple :future-common :future-conditional
-                :past-simple :past-imperfect :past-perfect)
-               "։")))
+    :sentence (:or
+               :present :present-perfect
+               :future-simple :future-common :future-conditional
+               :past-simple :past-imperfect :past-perfect)))
 
 (defparameter *adjectives*
   (remove-duplicates
