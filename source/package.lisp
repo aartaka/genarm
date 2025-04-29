@@ -3,4 +3,5 @@
 
 (uiop:define-package :genarm
   (:use :common-lisp :uiop)
+  (:export #:generate)
   (:documentation "Describe `genarm' package here"))
