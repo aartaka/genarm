@@ -21,4 +21,8 @@ And then load ~:genarm~ in the REPL:
 
 #+begin_src lisp
   ;; Basic example here, see more in package.lisp.
+  (genarm:generate)
+  ;; => "սա աղվում է։"
+  (genarm:generate :past-perfect)
+  ;; => "կատուդ նայվել էր։"
 #+end_src
